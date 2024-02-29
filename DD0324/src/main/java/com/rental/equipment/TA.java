@@ -11,7 +11,7 @@ import java.util.Calendar;
 
 /**
  *
- * @author ddevore
+ * @author ddevo
  */
 public class TA {
     
