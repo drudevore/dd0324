@@ -46,7 +46,7 @@ public class RentalAgreement {
      */
     public int getChargeDays() {
         ToolCharge charge = ToolCharges.getCharge(cart.getTool().getType());
-        return charge.getChargeDays(getCheckoutDate(), getRentalDays());
+        return charge.calculateChargeDays(getCheckoutDate(), getRentalDays());
     }
 
     /**
