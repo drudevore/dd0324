@@ -25,13 +25,6 @@ public class ToolCharges {
     }
     
     /**
-     * @return the ToolCharge array contained by this ToolCharges object. 
-     */
-    public static ToolCharge[] getCharges() {
-        return charges;
-    }
-    
-    /**
      * @param toolType
      * @return the ToolCharge object associated with the provided toolType.
      */
