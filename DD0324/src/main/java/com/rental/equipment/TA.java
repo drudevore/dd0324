@@ -4,6 +4,7 @@
 
 package com.rental.equipment;
 
+import com.rental.equipment.utils.Holiday;
 import com.rental.equipment.data.ToolCharges;
 import com.rental.equipment.data.Tools;
 import com.rental.equipment.exception.CheckoutException;
@@ -23,7 +24,7 @@ public class TA {
         
 //        testTools();
 //        testToolCharges();
-//        testHoliday();
+        testHoliday();
         testAgreement();
     }
     
@@ -52,13 +53,14 @@ public class TA {
         start.set(Calendar.DAY_OF_MONTH, 2);
         start.set(Calendar.YEAR, 2026);
         try {
-            cart = new Cart(Tools.getTool("CHNS"), 5, 28, start);
-            agreement = cart.checkout();
+//            cart = new Cart(Tools.getTool("CHNS"), 5, 28, start);
+//            agreement = cart.checkout();
+            agreement = Cart.checkout("CHNS", 5, 28, start);
         } catch (CheckoutException e) {
             System.out.println("exception = " + e);
             return;
         }
-        System.out.println("tool charge = " + ToolCharges.getCharge(cart.getTool().getType()));
+//        System.out.println("tool charge = " + ToolCharges.getCharge(cart.getTool().getType()));
         System.out.println("charge days = " + agreement.getChargeDays());
 
         System.out.println("prediscount charge = " + agreement.getPreDiscountCharge());

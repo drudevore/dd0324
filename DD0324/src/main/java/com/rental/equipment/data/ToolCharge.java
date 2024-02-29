@@ -4,7 +4,7 @@
  */
 package com.rental.equipment.data;
 
-import com.rental.equipment.Holiday;
+import com.rental.equipment.utils.Holiday;
 import java.util.Calendar;
 
 /**

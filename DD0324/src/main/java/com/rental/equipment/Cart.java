@@ -59,23 +59,6 @@ public class Cart {
     }
     
     /**
-     * Initialization method for the Cart object used to hold the cart data for 
-     * the application. 
-     * 
-     * @param tool the tool to be rented.
-     * @param rentalDays the number of days the tool will be rented.
-     * @param discount the discount that will be applied to the rental.
-     * @param checkoutDate the date the rental tool will be rented.
-     */
-    public Cart(Tool tool, int rentalDays, int discount, 
-            Calendar checkoutDate) {
-        this.tool = tool;
-        this.rentalDays = rentalDays;
-        this.discount = discount;
-        this.checkoutDate = checkoutDate;
-    }
-
-    /**
      * Method for checking the renter out and crating the rental agreement. 
      * 
      * @return the RentalAgreement. 
@@ -102,6 +85,22 @@ public class Cart {
         }
         
         return new RentalAgreement(this);
+    }
+    
+    /**
+     * Creates a RentalAgreement without a cart being created already. 
+     * 
+     * @param toolCode the tool code for the tool to be rented.
+     * @param rentalDays the number of days the tool will be rented.
+     * @param discount the discount that will be applied to the rental.
+     * @param checkoutDate the date the rental tool will be rented.
+     * @return the RentalAgreement.
+     * @throws com.rental.equipment.exception.CheckoutException
+     */
+    public static RentalAgreement checkout(String toolCode, int rentalDays, 
+            int discount, Calendar checkoutDate) throws CheckoutException {
+        Cart cart = new Cart(toolCode, rentalDays, discount, checkoutDate);
+        return cart.checkout();
     }
     
     /**
