@@ -68,13 +68,6 @@ public class RentalAgreement {
     }
 
     /**
-     * @return the cart
-     */
-    public Cart getCart() {
-        return cart;
-    }
-
-    /**
      * @return the Count of chargeable days, from day after checkout through 
      *         and including due date, excluding “no charge” days as specified 
      *         by the tool type.
