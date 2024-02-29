@@ -33,50 +33,12 @@ public class RentalAgreement {
     }
     
     /**
-     * @return the cart
-     */
-    public Cart getCart() {
-        return cart;
-    }
-
-    /**
-     * @return the Count of chargeable days, from day after checkout through 
-     *         and including due date, excluding “no charge” days as specified 
-     *         by the tool type.
-     */
-    public int calculateChargeDays() {
-        ToolCharge charge = ToolCharges.getCharge(cart.getTool().getType());
-        return charge.calculateChargeDays(getCheckoutDate(), getRentalDays());
-    }
-
-    /**
-     * @return the checkoutDate
-     */
-    public Calendar getCheckoutDate() {
-        return cart.getCheckoutDate();
-    }
-
-    /**
-     * @return the dailyRentalCharge
-     */
-    public double calculateDailyRentalCharge() {
-        return ToolCharges.getCharge(cart.getTool().getType()).getDailyCharge();
-    }
-    
-    /** 
-     * @return the discount amount as an integer.
-     */
-    public int getDiscount() {
-        return cart.getDiscount();
-    }
-    
-    /**
      * @return the calculated from discount % and pre-discount charge. 
      *         Resulting amount rounded half up to cents.
      */
     public double calculateDiscountAmount() {
         return RentalAgreement.roundHalfUp(
-                calculatePreDiscountCharge() * cart.getDiscount()/100);
+                calculatePreDiscountCharge() * (cart.getDiscount()/100));
     }
 
     /**
@@ -102,10 +64,47 @@ public class RentalAgreement {
      *         rounded half up to cents.
      */
     public double calculatePreDiscountCharge() {
-        return RentalAgreement.roundHalfUp(calculateDailyRentalCharge() 
-                * calculateChargeDays());
+        return getDailyRentalCharge() * getChargeDays();
     }
 
+    /**
+     * @return the cart
+     */
+    public Cart getCart() {
+        return cart;
+    }
+
+    /**
+     * @return the Count of chargeable days, from day after checkout through 
+     *         and including due date, excluding “no charge” days as specified 
+     *         by the tool type.
+     */
+    public int getChargeDays() {
+        ToolCharge charge = ToolCharges.getCharge(cart.getTool().getType());
+        return charge.calculateChargeDays(getCheckoutDate(), getRentalDays());
+    }
+
+    /**
+     * @return the checkoutDate
+     */
+    public Calendar getCheckoutDate() {
+        return cart.getCheckoutDate();
+    }
+
+    /**
+     * @return the dailyRentalCharge
+     */
+    public double getDailyRentalCharge() {
+        return ToolCharges.getCharge(cart.getTool().getType()).getDailyCharge();
+    }
+    
+    /** 
+     * @return the discount amount as an integer.
+     */
+    public int getDiscount() {
+        return cart.getDiscount();
+    }
+    
     /**
      * @return the rentalDays
      */
@@ -150,8 +149,8 @@ public class RentalAgreement {
         System.out.println("Due Date:            " + 
                 calFormatter.format(calculateDueDate().getTime()));
         System.out.println("Daily Rental Charge: " + 
-                currFormatter.format(calculateDailyRentalCharge()));
-        System.out.println("Charge Days:         " + calculateChargeDays());
+                currFormatter.format(getDailyRentalCharge()));
+        System.out.println("Charge Days:         " + getChargeDays());
         System.out.println("Pre-Discount Charge: " + 
                 currFormatter.format(calculatePreDiscountCharge()));
         System.out.println("Discount Percent:    " + getDiscount() + "%");

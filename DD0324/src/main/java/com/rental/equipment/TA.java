@@ -55,13 +55,13 @@ public class TA {
         try {
 //            cart = new Cart(Tools.getTool("CHNS"), 5, 28, start);
 //            agreement = cart.checkout();
-            agreement = Cart.checkout("CHNS", 5, 28, start);
+            agreement = Cart.checkout("CHNS", 5, 29, start);
         } catch (CheckoutException e) {
             System.out.println("exception = " + e);
             return;
         }
 //        System.out.println("tool charge = " + ToolCharges.getCharge(cart.getTool().getType()));
-        System.out.println("charge days = " + agreement.calculateChargeDays());
+        System.out.println("charge days = " + agreement.getChargeDays());
 
         System.out.println("prediscount charge = " + agreement.calculatePreDiscountCharge());
         System.out.println("discount amount = " + agreement.calculateDiscountAmount());
