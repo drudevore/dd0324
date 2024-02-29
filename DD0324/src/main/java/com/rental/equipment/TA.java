@@ -6,6 +6,7 @@ package com.rental.equipment;
 
 import com.rental.equipment.data.ToolCharges;
 import com.rental.equipment.data.Tools;
+import com.rental.equipment.exception.CheckoutException;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -52,8 +53,8 @@ public class TA {
         start.set(Calendar.YEAR, 2026);
         try {
             cart = new Cart(Tools.getTool("CHNS"), 5, 28, start);
-            agreement = new RentalAgreement(cart);
-        } catch (Exception e) {
+            agreement = cart.checkout();
+        } catch (CheckoutException e) {
             System.out.println("exception = " + e);
             return;
         }

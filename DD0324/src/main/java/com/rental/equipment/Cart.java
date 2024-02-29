@@ -5,6 +5,8 @@
 package com.rental.equipment;
 
 import com.rental.equipment.data.Tool;
+import com.rental.equipment.data.Tools;
+import com.rental.equipment.exception.CheckoutException;
 import java.util.Calendar;
 
 /**
@@ -18,15 +20,27 @@ public class Cart {
     private int discount = 0;
     private Calendar checkoutDate = null;
     
+    private final static String TOOL_EXCEPTION_MESSAGE = 
+            "There must be a tool entered into the cart to create a rental "
+            + "agreement. Please add a tool to the cart and try to checkout "
+            + "again.";
     private final static String RENTAL_EXCEPTION_MESSAGE = 
-            "To be able to rent equipment the rental days must be more than "
-            + "1 day. Please set the rental day count to more than 1 day.";
+            "The rental days must be 1 or more to rent equipment. Please set "
+            + "the rental day count to 1 or more days and try to checkout "
+            + "again.";
     private final static String DISCOUNT_EXCEPTION_MESSAGE = 
             "The discount percentage must be between 0 and 100. Please set "
-            + "the percentage to a correct amount.";
+            + "the percentage to an amount between 0 and 100 and try to "
+            + "checkout again.";
     private final static String CHECKOUT_DATE_EXCEPTION_MESSAGE = 
-            "The checkout date must be today or later.";
+            "The checkout date must be today or later. Please set the checkout "
+            + "date to today or later and try to checkout again.";
 
+    /**
+     * Initializes the cart without any of the required information to checkout
+     */
+    public Cart() {}
+    
     /**
      * Initialization method for the Cart object used to hold the cart data for 
      * the application. 
@@ -35,30 +49,44 @@ public class Cart {
      * @param rentalDays
      * @param discount
      * @param checkoutDate
-     * @throws Exception 
      */
     public Cart(Tool tool, int rentalDays, int discount, 
-            Calendar checkoutDate) throws Exception {
-        if (rentalDays < 1) { 
-            throw new Exception(RENTAL_EXCEPTION_MESSAGE);
-        }
-        
-        if (discount < 0 || discount > 100) {
-            throw new Exception(DISCOUNT_EXCEPTION_MESSAGE);
-        }
-        
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        if (checkoutDate.before(cal)) {
-            throw new Exception(CHECKOUT_DATE_EXCEPTION_MESSAGE);
-        }
-        
+            Calendar checkoutDate) {
         this.tool = tool;
         this.rentalDays = rentalDays;
         this.discount = discount;
         this.checkoutDate = checkoutDate;
     }
 
+    /**
+     * Method for checking the renter out and crating the rental agreement. 
+     * 
+     * @return the RentalAgreement. 
+     * @throws com.rental.equipment.exception.CheckoutException 
+     */
+    public RentalAgreement checkout() throws CheckoutException {
+        // All values in the cart are required to create a rental agreement.
+        if (tool == null) {
+            throw new CheckoutException(TOOL_EXCEPTION_MESSAGE);
+        }
+        
+        if (rentalDays < 1) { 
+            throw new CheckoutException(RENTAL_EXCEPTION_MESSAGE);
+        }
+        
+        if (discount < 0 || discount > 100) {
+            throw new CheckoutException(DISCOUNT_EXCEPTION_MESSAGE);
+        }
+        
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        if (checkoutDate == null || checkoutDate.before(cal)) {
+            throw new CheckoutException(CHECKOUT_DATE_EXCEPTION_MESSAGE);
+        }
+        
+        return new RentalAgreement(this);
+    }
+    
     /**
      * @return the tool
      */
@@ -72,6 +100,16 @@ public class Cart {
     public void setTool(Tool tool) {
         this.tool = tool;
     }
+    
+    /**
+     * @param toolCode the code of the tool to be rented.
+     */
+    public void setToolCode(String toolCode) {
+        if (toolCode == null) {
+            return;
+        }
+        tool = Tools.getTool(toolCode);
+    }
 
     /**
      * @return the rentalDayCount
@@ -82,12 +120,8 @@ public class Cart {
 
     /**
      * @param rentalDays the rentalDayCount to set
-     * @throws java.lang.Exception
      */
-    public void setRentalDays(int rentalDays) throws Exception {
-        if (rentalDays < 1) { 
-            throw new Exception(RENTAL_EXCEPTION_MESSAGE);
-        }
+    public void setRentalDays(int rentalDays) {
         this.rentalDays = rentalDays;
     }
 
@@ -100,13 +134,8 @@ public class Cart {
 
     /**
      * @param discount the discount to set
-     * @throws java.lang.Exception
      */
-    public void setDiscount(int discount) throws Exception {
-        if (discount < 0 || discount > 100) {
-            throw new Exception(DISCOUNT_EXCEPTION_MESSAGE);
-        }
-        
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
 
@@ -119,13 +148,8 @@ public class Cart {
 
     /**
      * @param checkoutDate the checkoutDate to set
-     * @throws java.lang.Exception
      */
-    public void setCheckoutDate(Calendar checkoutDate) throws Exception {
-        if (checkoutDate.before(Calendar.getInstance())) {
-            throw new Exception(CHECKOUT_DATE_EXCEPTION_MESSAGE);
-        }
-        
+    public void setCheckoutDate(Calendar checkoutDate) {
         this.checkoutDate = checkoutDate;
     }
 }

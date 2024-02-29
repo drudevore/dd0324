@@ -20,8 +20,6 @@ public class RentalAgreement {
     
     private Cart cart = null;
 
-    private final static String NULL_CART_EXCEPTION = "The cart cannot be null";
-
     /**
      * Initialization method for the RentalAgreement object to be used to 
      * create a RentalAgreement for reporting calculating most of the fields 
@@ -29,12 +27,8 @@ public class RentalAgreement {
      * console. 
      * 
      * @param cart
-     * @throws Exception 
      */
-    public RentalAgreement(Cart cart) throws Exception {
-        if (cart == null) {
-            throw new Exception(NULL_CART_EXCEPTION);
-        }
+    protected RentalAgreement(Cart cart) {
         this.cart = cart;
     }
     
@@ -43,17 +37,6 @@ public class RentalAgreement {
      */
     public Cart getCart() {
         return cart;
-    }
-
-    /**
-     * @param cart the cart to set
-     * @throws java.lang.Exception
-     */
-    public void setCart(Cart cart) throws Exception {
-        if (cart == null) {
-            throw new Exception(NULL_CART_EXCEPTION);
-        }
-        this.cart = cart;
     }
 
     /**
@@ -179,6 +162,12 @@ public class RentalAgreement {
                 currFormatter.format(getFinalCharge()));
     }
     
+    /** 
+     * Helper method to half round up the dollar amounts after calculations. 
+     * 
+     * @param amount
+     * @return a double value that has been rounded half up.
+     */
     private static double roundHalfUp(double amount) {
         BigDecimal bd = new BigDecimal(amount);
         bd = bd.setScale(2, RoundingMode.HALF_UP);
