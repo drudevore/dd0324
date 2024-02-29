@@ -61,11 +61,11 @@ public class TA {
             return;
         }
 //        System.out.println("tool charge = " + ToolCharges.getCharge(cart.getTool().getType()));
-        System.out.println("charge days = " + agreement.getChargeDays());
+        System.out.println("charge days = " + agreement.calculateChargeDays());
 
-        System.out.println("prediscount charge = " + agreement.getPreDiscountCharge());
-        System.out.println("discount amount = " + agreement.getDiscountAmount());
-        System.out.println("final Charge = " + agreement.getFinalCharge());
+        System.out.println("prediscount charge = " + agreement.calculatePreDiscountCharge());
+        System.out.println("discount amount = " + agreement.calculateDiscountAmount());
+        System.out.println("final Charge = " + agreement.calculateFinalCharge());
         agreement.printReport();
     }
     
