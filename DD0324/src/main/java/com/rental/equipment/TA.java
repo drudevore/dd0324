@@ -20,8 +20,6 @@ public class TA {
         ToolCharges.initializeToolCharges();
         Tools.initializeTools();
         
-        
-        
 //        testTools();
 //        testToolCharges();
 //        testHoliday();
