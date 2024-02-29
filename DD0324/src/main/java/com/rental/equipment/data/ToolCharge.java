@@ -47,7 +47,7 @@ public class ToolCharge {
      * @return the number of days to charge for the tool based on the checkout
      *         date and the rental days. 
      */
-    public int getChargeDays(Calendar checkout, int rentDays) {
+    public int calculateChargeDays(Calendar checkout, int rentDays) {
         Calendar cal = (Calendar)checkout.clone();
         int chargeDays = 0;
         for (int i = 0; i < rentDays; i++) {
