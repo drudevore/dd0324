@@ -45,10 +45,27 @@ public class Cart {
      * Initialization method for the Cart object used to hold the cart data for 
      * the application. 
      * 
-     * @param tool
-     * @param rentalDays
-     * @param discount
-     * @param checkoutDate
+     * @param toolCode the tool code for the tool to be rented.
+     * @param rentalDays the number of days the tool will be rented.
+     * @param discount the discount that will be applied to the rental.
+     * @param checkoutDate the date the rental tool will be rented.
+     */
+    public Cart(String toolCode, int rentalDays, int discount, 
+            Calendar checkoutDate) {
+        this.tool = Tools.getTool(toolCode);
+        this.rentalDays = rentalDays;
+        this.discount = discount;
+        this.checkoutDate = checkoutDate;
+    }
+    
+    /**
+     * Initialization method for the Cart object used to hold the cart data for 
+     * the application. 
+     * 
+     * @param tool the tool to be rented.
+     * @param rentalDays the number of days the tool will be rented.
+     * @param discount the discount that will be applied to the rental.
+     * @param checkoutDate the date the rental tool will be rented.
      */
     public Cart(Tool tool, int rentalDays, int discount, 
             Calendar checkoutDate) {
