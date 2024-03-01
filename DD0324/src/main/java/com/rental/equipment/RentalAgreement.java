@@ -19,6 +19,13 @@ import java.util.Calendar;
 public class RentalAgreement {
     
     private Cart cart = null;
+    
+    private int chargeDays = 0;
+    private double dailyRentalCharge = 0.0;
+    private double discountAmount = 0.0;
+    private Calendar dueDate = null;
+    private double finalCharge = 0.0;
+    private double preDiscountCharge = 0.0;
 
     /**
      * Initialization method for the RentalAgreement object to be used to 
@@ -30,65 +37,56 @@ public class RentalAgreement {
      */
     protected RentalAgreement(Cart cart) {
         this.cart = cart;
+        
+        // The charge days is the numbers of days to charge the customer for the
+        // rental based on the checkout day, weekday charges, weekend charges, 
+        // and holiday charges. It is calculated by the ToolCharge object. 
+        ToolCharge charge = ToolCharges.getCharge(cart.getTool().getType());
+        this.chargeDays = charge.calculateChargeDays(cart.getCheckoutDate(), 
+                cart.getRentalDays());
+                
+        // The daily rental charge comes from the ToolCharge object which is 
+        // gotten by using the tool type from the tool in the cart.
+        this.dailyRentalCharge = charge.getDailyCharge();
+        
+        // Pre-Discount is the daily rental charge * the charge days.
+        this.preDiscountCharge = this.dailyRentalCharge * this.chargeDays;
+        
+        // The discount amount is calculated using the daily rental charge
+        // * the discount as a precent. This value is rounded half up.
+        this.discountAmount = RentalAgreement.roundHalfUp(this.dailyRentalCharge
+                * (cart.getDiscount()/100.0));   
+
+        // The due date is calculated adding the rental days to the checkout
+        // date.
+        this.dueDate = (Calendar)cart.getCheckoutDate().clone();
+        this.dueDate.add(Calendar.DAY_OF_MONTH, cart.getRentalDays());
+        
+        // Final charge is the amount pre-discount - the discount amount 
+        // and it is roiunded half up.
+        this.finalCharge = RentalAgreement.roundHalfUp(this.preDiscountCharge 
+                - this.discountAmount);
     }
     
     /**
-     * @return the calculated from discount % and pre-discount charge. 
-     *         Resulting amount rounded half up to cents.
-     */
-    public double calculateDiscountAmount() {
-        return RentalAgreement.roundHalfUp(
-                calculatePreDiscountCharge() * (cart.getDiscount()/100));
-    }
-
-    /**
-     * @return the due date of the tool based on the checkout day and 
-     *         rental days.
-     */
-    public Calendar calculateDueDate() {
-        Calendar checkout = getCheckoutDate();
-        checkout.add(Calendar.DAY_OF_MONTH, cart.getRentalDays());
-        return checkout;
-    }
-
-    /**
-     * @return the Calculated as pre-discount charge - discount amount.
-     */
-    public double calculateFinalCharge() {
-        return RentalAgreement.roundHalfUp(calculatePreDiscountCharge() 
-                - calculateDiscountAmount());
-    }
-
-    /**
-     * @return the Calculated as charge days X daily charge. Resulting total 
-     *         rounded half up to cents.
-     */
-    public double calculatePreDiscountCharge() {
-        return getDailyRentalCharge() * getChargeDays();
-    }
-
-    /**
-     * @return the Count of chargeable days, from day after checkout through 
-     *         and including due date, excluding “no charge” days as specified 
-     *         by the tool type.
+     * @return the charge days for the tool. 
      */
     public int getChargeDays() {
-        ToolCharge charge = ToolCharges.getCharge(cart.getTool().getType());
-        return charge.calculateChargeDays(getCheckoutDate(), getRentalDays());
+        return chargeDays;
     }
 
     /**
-     * @return the checkoutDate
+     * @return the checkout date set by the user.
      */
     public Calendar getCheckoutDate() {
         return cart.getCheckoutDate();
     }
 
     /**
-     * @return the dailyRentalCharge
+     * @return the daily rental charge for the tool.
      */
     public double getDailyRentalCharge() {
-        return ToolCharges.getCharge(cart.getTool().getType()).getDailyCharge();
+        return dailyRentalCharge;
     }
     
     /** 
@@ -98,6 +96,35 @@ public class RentalAgreement {
         return cart.getDiscount();
     }
     
+    /**
+     * @return the amount discounted for the user.
+     */
+    public double getDiscountAmount() {
+        return discountAmount;
+    }
+
+    /**
+     * @return the due date of the tool based on the checkout day and 
+     *         rental days.
+     */
+    public Calendar getDueDate() {
+        return dueDate;
+    }
+
+    /**
+     * @return the final charge for the rental.
+     */
+    public double getFinalCharge() {
+        return finalCharge;
+    }
+
+    /**
+     * @return the pre-discounted charge for the rental.
+     */
+    public double getPreDiscountCharge() {
+        return preDiscountCharge;
+    }
+
     /**
      * @return the rentalDays
      */
@@ -133,24 +160,54 @@ public class RentalAgreement {
         SimpleDateFormat calFormatter = new SimpleDateFormat("MM/dd/yy");
         NumberFormat currFormatter = NumberFormat.getCurrencyInstance();
         
-        System.out.println("Tool Code:           " + cart.getTool().getCode());
-        System.out.println("Tool Type:           " + cart.getTool().getType());
-        System.out.println("Tool Brand:          " + cart.getTool().getBrand());
-        System.out.println("Rental Days:         " + cart.getRentalDays());
+        System.out.println("Tool Code:           " + getToolCode());
+        System.out.println("Tool Type:           " + getToolType());
+        System.out.println("Tool Brand:          " + getToolBrand());
+        System.out.println("Rental Days:         " + getRentalDays());
         System.out.println("Checkout Date:       " + 
                 calFormatter.format(getCheckoutDate().getTime()));
         System.out.println("Due Date:            " + 
-                calFormatter.format(calculateDueDate().getTime()));
+                calFormatter.format(getDueDate().getTime()));
         System.out.println("Daily Rental Charge: " + 
                 currFormatter.format(getDailyRentalCharge()));
         System.out.println("Charge Days:         " + getChargeDays());
         System.out.println("Pre-Discount Charge: " + 
-                currFormatter.format(calculatePreDiscountCharge()));
+                currFormatter.format(getPreDiscountCharge()));
         System.out.println("Discount Percent:    " + getDiscount() + "%");
         System.out.println("Discount Amount:     " + 
-                currFormatter.format(calculateDiscountAmount()));
+                currFormatter.format(getDiscountAmount()));
         System.out.println("Final Charge:        " + 
-                currFormatter.format(calculateFinalCharge()));
+                currFormatter.format(getFinalCharge()));
+    }
+    
+    /**
+     * Converts the RentalAgreement to a string. 
+     * 
+     * @retrun a String representation of the RentalAgreement.
+     */
+    @Override
+    public String toString() {
+        SimpleDateFormat calFormatter = new SimpleDateFormat("MM/dd/yy");
+        NumberFormat currFormatter = NumberFormat.getCurrencyInstance();
+
+        return "Tool Code:" + getToolCode() 
+                + ";Tool Type:" + getToolType() 
+                + ";Tool Brand:" + getToolBrand() 
+                + ";Rental Days:" + getRentalDays() 
+                + ";Checkout Date:" 
+                    + calFormatter.format(getCheckoutDate().getTime())
+                + ";Due Date:" 
+                    + calFormatter.format(getDueDate().getTime())
+                + ";Daily Rental Charge:" 
+                    + currFormatter.format(getDailyRentalCharge())
+                + ";Charge Days:" + getChargeDays()
+                + ";Pre-Discount Charge:" 
+                    + currFormatter.format(getPreDiscountCharge())
+                + ";Discount Percent:" + getDiscount() + "%"
+                + ";Discount Amount:" 
+                    + currFormatter.format(getDiscountAmount())
+                + ";Final Charge:" 
+                    + currFormatter.format(getFinalCharge());
     }
     
     /** 
