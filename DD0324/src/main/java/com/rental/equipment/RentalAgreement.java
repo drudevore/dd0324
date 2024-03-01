@@ -55,7 +55,7 @@ public class RentalAgreement {
         // The discount amount is calculated using the daily rental charge
         // * the discount as a precent. This value is rounded half up.
         this.discountAmount = RentalAgreement.roundHalfUp(this.dailyRentalCharge
-                * (cart.getDiscount()/100.0));   
+                * (cart.getDiscountPercent()/100.0));   
 
         // The due date is calculated adding the rental days to the checkout
         // date.
@@ -93,7 +93,7 @@ public class RentalAgreement {
      * @return the discount amount as an integer.
      */
     public int getDiscount() {
-        return cart.getDiscount();
+        return cart.getDiscountPercent();
     }
     
     /**

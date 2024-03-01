@@ -21,7 +21,7 @@ public class Tool {
      * @param type
      * @param brand 
      */
-    public Tool(String code, String type, String brand) {
+    protected Tool(String code, String type, String brand) {
         this.code = code;
         this.type = type;
         this.brand = brand;

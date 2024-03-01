@@ -51,4 +51,12 @@ public class Tools {
         }
         return null;
     }
+
+    /**
+     * 
+     * @return the array of Tools contained by this object.
+     */
+    public static Tool[] getTools() {
+        return tools;
+    }
 }

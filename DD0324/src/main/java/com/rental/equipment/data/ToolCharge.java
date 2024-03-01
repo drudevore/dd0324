@@ -28,7 +28,7 @@ public class ToolCharge {
      * @param weekendCharge
      * @param holidayCharge 
      */
-    public ToolCharge(String toolType, double dailyCharge, 
+    protected ToolCharge(String toolType, double dailyCharge, 
             boolean weekdayCharge, boolean weekendCharge, 
             boolean holidayCharge){
         this.toolType = toolType;
@@ -82,24 +82,10 @@ public class ToolCharge {
     }
 
     /**
-     * @param toolType the toolType to set
-     */
-    public void setToolType(String toolType) {
-        this.toolType = toolType;
-    }
-
-    /**
      * @return the dailyCharge
      */
     public double getDailyCharge() {
         return dailyCharge;
-    }
-
-    /**
-     * @param dailyCharge the dailyCharge to set
-     */
-    public void setDailyCharge(double dailyCharge) {
-        this.dailyCharge = dailyCharge;
     }
 
     /**
@@ -110,13 +96,6 @@ public class ToolCharge {
     }
 
     /**
-     * @param weekdayCharge the weekdayCharge to set
-     */
-    public void setWeekdayCharge(boolean weekdayCharge) {
-        this.weekdayCharge = weekdayCharge;
-    }
-
-    /**
      * @return the weekendCharge
      */
     public boolean isWeekendCharge() {
@@ -124,24 +103,10 @@ public class ToolCharge {
     }
 
     /**
-     * @param weekendCharge the weekendCharge to set
-     */
-    public void setWeekendCharge(boolean weekendCharge) {
-        this.weekendCharge = weekendCharge;
-    }
-
-    /**
      * @return the holidayCharge
      */
     public boolean isHolidayCharge() {
         return holidayCharge;
-    }
-
-    /**
-     * @param holidayCharge the holidayCharge to set
-     */
-    public void setHolidayCharge(boolean holidayCharge) {
-        this.holidayCharge = holidayCharge;
     }
 
     /**
