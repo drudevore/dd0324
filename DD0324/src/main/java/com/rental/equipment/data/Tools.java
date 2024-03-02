@@ -15,7 +15,7 @@ public class Tools {
     /**
      * Initializes the tools object that contains an array with the tools in it.
      */
-    public static void initializeTools() {
+    private static void initializeTools() {
         tools = new Tool[4];
         tools[0] = new Tool("CHNS", "Chainsaw", "Stihl");
         tools[1] = new Tool("LADW", "Ladder", "Werner");
@@ -29,6 +29,10 @@ public class Tools {
      * @return the Tool object associated with the provided code.
      */
     public static Tool getTool(String code) {
+        if (tools == null) {
+            initializeTools();
+        }
+        
         for (Tool tool : tools) {
             if (tool.getCode().equals(code)) {
                 return tool;
@@ -44,6 +48,10 @@ public class Tools {
      * @return returns the Tool object identified by the provided type and brand.
      */
     public static Tool getTool(String type, String brand) {
+        if (tools == null) {
+            initializeTools();
+        }
+        
         for (Tool tool : tools) {
             if (tool.getType().equals(type) && tool.getBrand().equals(brand)) {
                 return tool;
@@ -57,6 +65,10 @@ public class Tools {
      * @return the array of Tools contained by this object.
      */
     public static Tool[] getTools() {
+        if (tools == null) {
+            initializeTools();
+        }
+
         return tools;
     }
 }

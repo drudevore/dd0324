@@ -178,7 +178,8 @@ public class Cart {
     }
 
     /**
-     * @param discountPercent the discount percentage that is used for 
+
+* @param discountPercent the discount percentage that is used for 
      * calculating the discounts.
      */
     public void setDiscountPercent(int discountPercent) {

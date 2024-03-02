@@ -17,7 +17,7 @@ public class ToolCharges {
      * Initializes the ToolCharge array with the required values to be used 
      * by the program.
      */
-    public static void initializeToolCharges() {
+    private static void initializeToolCharges() {
         charges = new ToolCharge[3];
         charges[0] = new ToolCharge("Ladder", 1.99, true, true, false);
         charges[1] = new ToolCharge("Chainsaw", 1.49, true, false, true);
@@ -28,6 +28,10 @@ public class ToolCharges {
      * @return the ToolCharge array contained by this ToolCharges object. 
      */
     public static ToolCharge[] getCharges() {
+        if (charges == null) {
+            initializeToolCharges();
+        }
+        
         return charges;
     }
     
@@ -36,6 +40,10 @@ public class ToolCharges {
      * @return the ToolCharge object associated with the provided toolType.
      */
     public static ToolCharge getCharge(String toolType) {
+        if (charges == null) {
+            initializeToolCharges();
+        }
+        
         for (ToolCharge charge : charges) {
             if (charge.getToolType().equals(toolType)) {
                 return charge;
