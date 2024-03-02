@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class HolidayTest {
     
-//    public HolidayTest() {
-//    }
+    public HolidayTest() {
+    }
     
     /**
      * Test of isHoliday method, of class Holiday.
