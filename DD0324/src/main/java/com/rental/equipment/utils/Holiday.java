@@ -37,7 +37,6 @@ public class Holiday {
                     dow == Calendar.SATURDAY) {
                 if (date == 3 && dow == Calendar.FRIDAY ||
                         date == 5 && dow == Calendar.MONDAY) {
-                    
                     return true;
                 }
             } else {
