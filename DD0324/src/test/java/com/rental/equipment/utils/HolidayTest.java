@@ -89,6 +89,6 @@ public class HolidayTest {
         result = Holiday.isHoliday(day);
         assertFalse(result);
         
-        System.out.println("Holiday tests complete.");
+        System.out.println("HolidayTest.testIsHoliday tests complete.");
     }
 }

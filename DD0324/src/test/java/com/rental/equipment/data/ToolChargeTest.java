@@ -56,5 +56,7 @@ public class ToolChargeTest {
         chargeDays = toolCharge.calculateChargeDays(checkout, rentDays);
         System.out.println("rentdays = " + rentDays + " chargeDays = " + chargeDays);
         assertEquals(2, chargeDays);
+        
+        System.out.println("ToolChargeTest.testCalculateChargeDays() test complete.");        
     }
 }

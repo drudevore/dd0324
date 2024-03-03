@@ -25,7 +25,7 @@ public class ToolChargesTest {
         System.out.println("Charges length = " + charges.length);
         assertEquals(charges.length, 3);
         
-        System.out.println("ToolCharges.getCharges() test complete.");
+        System.out.println("ToolChargesTest.testGetCharges() test complete.");
     }
 
     /**
@@ -41,6 +41,6 @@ public class ToolChargesTest {
             assertEquals(charge.getToolType(), toolType);
         }
 
-        System.out.println("ToolCharges.getCharges(toolType) test complete.");
+        System.out.println("ToolChargesTest.testGetCharge() test complete.");
     }
 }
