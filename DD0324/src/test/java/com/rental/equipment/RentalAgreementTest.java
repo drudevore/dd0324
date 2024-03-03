@@ -7,8 +7,6 @@ package com.rental.equipment;
 import com.rental.equipment.data.Tool;
 import com.rental.equipment.data.ToolCharges;
 import com.rental.equipment.data.Tools;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
