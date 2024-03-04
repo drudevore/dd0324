@@ -187,27 +187,18 @@ public class RentalAgreement {
      */
     @Override
     public String toString() {
-        SimpleDateFormat calFormatter = new SimpleDateFormat("MM/dd/yy");
-        NumberFormat currFormatter = NumberFormat.getCurrencyInstance();
-
         return "Tool Code:" + getToolCode() 
                 + ";Tool Type:" + getToolType() 
                 + ";Tool Brand:" + getToolBrand() 
                 + ";Rental Days:" + getRentalDays() 
-                + ";Checkout Date:" 
-                    + calFormatter.format(getCheckoutDate().getTime())
-                + ";Due Date:" 
-                    + calFormatter.format(getDueDate().getTime())
-                + ";Daily Rental Charge:" 
-                    + currFormatter.format(getDailyRentalCharge())
+                + ";Checkout Date:" + getCheckoutDate()
+                + ";Due Date:" + getDueDate()
+                + ";Daily Rental Charge:" + getDailyRentalCharge()
                 + ";Charge Days:" + getChargeDays()
-                + ";Pre-Discount Charge:" 
-                    + currFormatter.format(getPreDiscountCharge())
-                + ";Discount Percent:" + getDiscount() + "%"
-                + ";Discount Amount:" 
-                    + currFormatter.format(getDiscountAmount())
-                + ";Final Charge:" 
-                    + currFormatter.format(getFinalCharge());
+                + ";Pre-Discount Charge:" + getPreDiscountCharge()
+                + ";Discount Percent:" + getDiscount()
+                + ";Discount Amount:" + getDiscountAmount()
+                + ";Final Charge:" + getFinalCharge();
     }
     
     /** 
