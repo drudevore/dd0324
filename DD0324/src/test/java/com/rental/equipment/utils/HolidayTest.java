@@ -27,8 +27,8 @@ public class HolidayTest {
 
         // Day = 03/01/24
         System.out.println("Not a holiday.");
-        day.set(Calendar.MONTH, Calendar.MARCH);
-        day.set(Calendar.DAY_OF_MONTH, 1);
+        day.set(Calendar.MONTH, Calendar.JULY);
+        day.set(Calendar.DAY_OF_MONTH, 6);
         day.set(Calendar.YEAR, 2024);
         result = Holiday.isHoliday(day);
         assertFalse(result);
