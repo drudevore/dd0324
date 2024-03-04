@@ -30,9 +30,14 @@ public class Holiday {
      * @return 
      */
     private static boolean isIndependenceDay(Calendar day) {
+        // Check if the month is July
         if (day.get(Calendar.MONTH) == Calendar.JULY) {
             int date = day.get(Calendar.DATE);
             int dow = day.get(Calendar.DAY_OF_WEEK);
+            
+            // Check if is isn't the 4th or the day is Saturday or Sunday it 
+            // could be a recognized holiday if it is the 3 and a Friday or 
+            // the 5 and a Monday. is the 4th and 
             if ((date != 4 || dow == Calendar.SUNDAY) ||
                     dow == Calendar.SATURDAY) {
                 if (date == 3 && dow == Calendar.FRIDAY ||
@@ -40,6 +45,7 @@ public class Holiday {
                     return true;
                 }
             } else {
+                // This will be the 4th and a week day.
                 return true;
             }
         }
