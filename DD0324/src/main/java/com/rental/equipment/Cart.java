@@ -150,9 +150,6 @@ public class Cart {
      * @param toolCode the code of the tool to be rented.
      */
     public void setToolCode(String toolCode) {
-        if (toolCode == null) {
-            return;
-        }
         tool = Tools.getTool(toolCode);
     }
 
