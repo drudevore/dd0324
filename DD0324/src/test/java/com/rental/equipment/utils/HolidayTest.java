@@ -25,7 +25,7 @@ public class HolidayTest {
         Calendar day = Calendar.getInstance();
         boolean result = false;
 
-        // Day = 03/01/24
+        // Day = 07/06/24
         System.out.println("Not a holiday.");
         day.set(Calendar.MONTH, Calendar.JULY);
         day.set(Calendar.DAY_OF_MONTH, 6);
